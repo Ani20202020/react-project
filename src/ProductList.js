@@ -1,26 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import ProductCard from './ProductCard';
+import React from "react";
+import ProductCard from "./ProductCard";
+import './ProductList.css';
 
-const ProductList = () => {
-  const [products, setProducts] = useState([]); 
-  const [loading, setLoading] = useState(true); 
-
-  useEffect(() => {
-    fetch('https://dummyjson.com/products')
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data.products); 
-        setLoading(false);         
-      });
-  }, []);
-
-  if (loading) return <p>Loading...</p>; 
-
+const ProductList = ({ products }) => {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+    <div className="product-list">
+      {products.length === 0 ? (
+        <p>No products found!</p>
+      ) : (
+        products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))
+      )}
     </div>
   );
 };
